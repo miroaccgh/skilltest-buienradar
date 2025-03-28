@@ -1,3 +1,11 @@
+# Devenv
+.devenv/
+flake.devenv.nix
+devenv.lock
+
+# Poetry
+.poetry/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
