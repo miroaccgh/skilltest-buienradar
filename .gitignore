@@ -7,7 +7,7 @@ devenv.lock
 .poetry/
 
 # Draw.io
-*.dtmp
+.$ERD.drawio.dtmp
 *.bkp
 
 # Byte-compiled / optimized / DLL files
