@@ -10,6 +10,10 @@ class Client:
     def get_environment_variables(self):
         load_dotenv()
         self._api_url = os.getenv("API_URL")
+
+    @property
+    def get_data(self):
+        self.parse_data()
     
     def fetch_data(self) -> str:
         try:
@@ -29,14 +33,39 @@ class Client:
         response  = self.fetch_data()
         try:
             root = ElementTree.fromstring(response)
-            print(root)
-            return root
+            data = {
+            "stations": {},
+            "measurements": []
+            }
+            for station in root.findall(".//weerstation"):
+                station_code = station.find("stationcode")
+                if station_code is not None:
+                    station_code = station_code.text
+                else:
+                    station_code = "Unknown"
 
+                data["stations"][station_code] = {
+                    "station_id": station_code,
+                    "station_name": station.find("stationnaam").text if station.find("stationnaam") is not None else "Unknown",
+                    "lat": station.find("lat").text if station.find("lat") is not None else "Unknown",
+                    "lon": station.find("lon").text if station.find("lon") is not None else "Unknown",
+                    "region": station.find("stationnaam").attrib if station.find("stationnaam") is not None else {}
+                }
+
+                measurement = {
+                    "station_id": station_code,
+                    "timestamp": station.find("datum").text if station.find("datum") is not None else "Unknown",
+                    "temperature": station.find("temperatuur10cm").text if station.find("temperatuur10cm") is not None else "Unknown",
+                    "ground_temperature": station.find("tempratuurGC").text if station.find("tempratuurGC") is not None else "Unknown",
+                    "wind_gusts": station.find("windstotenMS").text if station.find("windstotenMS") is not None else "Unknown",
+                    "wind_speed": station.find("windsnelheidMS").text if station.find("windsnelheidMS") is not None else "Unknown",
+                    "precipitation": station.find("regenMMPU").text if station.find("regenMMPU") is not None else "Unknown",
+                    "sun_power": station.find("zonintensieteit").text if station.find("zonintensieteit") is not None else "Unknown"
+                }
+
+                data["measurements"].append(measurement)
+
+            return data
         except ElementTree.ParseError as error:
             print(f"API_CLIENT: Error parsing XML: {error}")
-    
-    def extract_data(self) -> dict:
-        root = self.parse_data()
-
-    def get_data(self):
-        pass
+            return {}
