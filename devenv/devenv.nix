@@ -3,11 +3,11 @@
 
 {
   packages = with pkgs; [
+    python310
     poetry
   ];
-  languages.python.enable = true;
-  languages.python.version = "3.12";
   enterShell = ''
     cd ../
   '';
+
 }
