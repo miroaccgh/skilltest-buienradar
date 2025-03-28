@@ -60,7 +60,8 @@ class Client:
                     "wind_gusts": station.find("windstotenMS").text if station.find("windstotenMS") is not None else "Unknown",
                     "wind_speed": station.find("windsnelheidMS").text if station.find("windsnelheidMS") is not None else "Unknown",
                     "precipitation": station.find("regenMMPU").text if station.find("regenMMPU") is not None else "Unknown",
-                    "sun_power": station.find("zonintensieteit").text if station.find("zonintensieteit") is not None else "Unknown"
+                    "sun_power": station.find("zonintensieteit").text if station.find("zonintensieteit") is not None else "Unknown",
+                    "humidity": station.find("luchtvochtigheid").text if station.find("luchtvochtigheid") is not None else "Unknown"
                 }
 
                 data["measurements"].append(measurement)
