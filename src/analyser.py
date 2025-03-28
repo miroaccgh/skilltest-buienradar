@@ -1,5 +1,6 @@
 import database
 
-class Anayser:
+class Analyser:
     def __init__(self) -> None:
-        self.db_client = database.client.Client()
+        self._db_client = database.Client()
+        self._db_client.query_all_instances()

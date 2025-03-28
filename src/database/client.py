@@ -27,7 +27,7 @@ class Measurement(SQLModel, table=True):
 
     station: Station = Relationship(back_populates="measurements")
 
-class Client(Station, Measurement):
+class Client():
     def __init__(self) -> None:
         self.get_environment_variables()
         self.start_database_engine()
