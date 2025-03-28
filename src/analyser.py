@@ -6,3 +6,4 @@ class Analyser:
         self._db_client = database.Client()
         self._db_client.query_all_instances()
         self._api_client  = api.Client()
+        self._api_client.extract_data()
