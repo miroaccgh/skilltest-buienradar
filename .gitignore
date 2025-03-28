@@ -1,6 +1,6 @@
 # Devenv
 .devenv/
-flake.devenv.nix
+.devenv.flake.nix
 devenv.lock
 
 # Poetry
